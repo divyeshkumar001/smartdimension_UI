@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="//assets.adobedtm.com/e3d6d7658cf1/05deee267e30/launch-5defa87cd17b.min.js"></script>
+    <script src="/js/visitorapi.min.js"></script>
+	<title>Smart Dimensions Home Page</title>
 </head>
 
 <body>
@@ -188,7 +191,7 @@
                     <h2>$190</h2>
                             </div>
                             <div class="col-md-3 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-primary">Shop Now</button>
+                                <button class="shop-now-button">Shop Now</button>
                             </div>
                         </div>
                     </div>
@@ -238,6 +241,7 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/script.js"></script>
     <script>
+        // "f6171253512D2B8C0A490D45@AdobeOrg"
         var vid = document.getElementById("video");
         function modalClose() {
             $("#exampleModal").modal('hide');
@@ -258,33 +262,37 @@
                     var data = {
                         url: './video/JustForFun.mp4',
                         products: [{
-                            url: 'https://www.google.com',
-                            title: 'Title 2',
+                            url: 'https://www.adobe.com',
+                            title: 'Apple Watch',
                             description: 'Product Description',
+                            confidence: '0.96',
                             image: './images/product-image.png',
                             startSecond: 10,
                             endSecond: 25
                         }, {
-                            url: 'https://www.google.com',
-                            title: 'Title 3',
+                            url: 'https://www.adobe.com',
+                            title: 'Nike Shoes',
                             description: 'Product Description',
+                            confidence: '0.9',
                             image: './images/Mask Group 16.png',
                             startSecond: 20,
                             endSecond: 25
                         }, {
-                            url: 'https://www.google.com',
-                            title: 'Title 4',
+                            url: 'https://www.adobe.com',
+                            title: 'Running Shorts',
                             description: 'Product Description',
+                            confidence: '0.95',
                             image: './images/Mask Group 17.png',
                             startSecond: 20,
                             endSecond: 25
                         },{
-                            url: 'https://www.google.com',
-                            title: 'Title 5',
+                            url: 'https://www.adobe.com',
+                            title: 'Tank Top',
                             description: 'Product Description',
+                            confidence: '0.89',
                             image: './images/Mask Group 18.png',
-                            startSecond: 30,
-                            endSecond: 40
+                            startSecond: 20,
+                            endSecond: 25
                         }]
                     };
                     vid.src =  data.url;
@@ -314,6 +322,26 @@
                         $('.seek i:last-of-type').text(timeUpdate(vid.duration));
                         vid.play();
                     }
+
+                    vid.onloadedmetadata = function() {
+                        var ev = new CustomEvent('videoPlayerLoad', {
+                        detail: {
+                            videoId: 'JustForFun042020',
+                            videoGenre: 'sports:cricket',
+                            videoName: 'JustForFun',
+                            videoLength: vid.duration,
+                            videoPlayerName: 'html5 player',
+                            paage: document.title,
+                            siteSection: 'Video: Sports',
+                            lang: 'EN',
+                            loginStatus: 'loggedIn' // loggedOut
+                        }
+                        });
+                        document.body.dispatchEvent(ev);
+                        var visitor = Visitor.getInstance('f6171253512D2B8C0A490D45@AdobeOrg');
+                        var mcvID = visitor.getMarketingCloudVisitorID()
+                        console.log(mcvID);
+                    };
 
                     vid.oncanplay();
                 }
@@ -355,7 +383,7 @@
         function updateSuggestion(data){
             var html = '';
             $.each(data, function(index, value) {
-            html += '<a href="'+value.url+'" target="_blank"><li><img src="'+value.image+'" /><div class="content"><h4>'+value.title+'</h4><p>'+value.description+'</p></div></li></a>'
+            html += '<a href="'+value.url+'" target="_blank"><li><img src="'+value.image+'" /><div class="content"><h4>'+value.title+'</h4><p>Confidence: '+value.confidence+'</p></div></li></a>'
                 
             });
        
@@ -399,6 +427,26 @@
             
             $(this).closest('.suggestion-generated').toggleClass('show');
         })
+
+        var animateButton = function(e) {
+
+e.preventDefault;
+//reset animation
+e.target.classList.remove('animate');
+
+e.target.classList.add('animate');
+
+e.target.classList.add('success');
+setTimeout(function(){
+  e.target.classList.remove('animate');
+},6000);
+};
+
+var classname = document.getElementsByClassName("shop-now-button");
+
+for (var i = 0; i < classname.length; i++) {
+classname[i].addEventListener('click', animateButton, false);
+}
     </script>
 </body>
 

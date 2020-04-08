@@ -1,0 +1,11 @@
+[{
+    url: './../video/JustForFun.mp4',
+    products: [{
+        url: 'https://www.google.com',
+        title: 'Title 1',
+        description: 'Product Description',
+        image: 'hello',
+        showTime: '00:00:20',
+        endTime: '00:00:25'
+    }]
+}]
