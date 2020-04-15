@@ -4,7 +4,8 @@
 <head>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/style.css">
     <script src="//assets.adobedtm.com/e3d6d7658cf1/05deee267e30/launch-5defa87cd17b.min.js"></script>
     <script src="/js/visitorapi.min.js"></script>
@@ -58,12 +59,12 @@
                         <a href="#" class="modal-open"><img src="./images/watch.png" class="watch"/> Watch Now</a>
                     </div>
                 </div>
-                <div class="item" style="background-image: url('./images/Capture.PNG')">
+                <div class="item" style="background-image: url('./images/live-watch.PNG')">
                     <div class="content">
 
-                        <h2>NZ vs Ind: TestLive Match</h2>
-                        <p>Find out how the players are doing in the Test series between New Zealand and India</p>
-                        <a href="#" class="modal-open live"><img src="./images/live-watch.png" class="watch"/> Watch Now (Live)</a>
+                        <h2>Ethiopia Tops, Oz Stumble</h2>
+                        <p>Bolt-led All-Stars win the 4x100 Mixed Relay and go on top of the leaderboard as Australia get disqualified</p>
+                        <a href="#" class="modal-open"><img src="./images/watch.png" class="watch"/> Watch Now</a>
                     </div>
                 </div>
                 <div class="item" style="background-image: url('./images/Badminton.jpg')">
@@ -191,7 +192,7 @@
                     <h2>$190</h2>
                             </div>
                             <div class="col-md-3 d-flex align-items-center justify-content-center">
-                                <button class="shop-now-button">Shop Now</button>
+                                <button class="shop-now-button">Get It Now</button>
                             </div>
                         </div>
                     </div>
@@ -310,7 +311,7 @@
                         var items= data.products.filter(function(item) {
                             return currentTime >= item.startSecond  && currentTime <= item.endSecond;
                         });
-                        if(percentage >=80) {
+                        if(percentage >=0) {
                            $(".modal-content").addClass('ad-display');
                            } else {
                                                           $(".modal-content").removeClass('ad-display')
@@ -435,11 +436,12 @@ e.preventDefault;
 e.target.classList.remove('animate');
 
 e.target.classList.add('animate');
+setTimeout(function(){ 
+    e.target.classList.add('success');
+    $('.shop-now-button').html('EMAIL SENT');
+ }, 3000);
 
-e.target.classList.add('success');
-setTimeout(function(){
-  e.target.classList.remove('animate');
-},6000);
+// $('.email-snt').toggle()
 };
 
 var classname = document.getElementsByClassName("shop-now-button");
