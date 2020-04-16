@@ -34,6 +34,8 @@ h3 {
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .owl-dots {
@@ -61,7 +63,7 @@ button.owl-dot.active span {
 .owl-carousel .item .content {
     position: absolute;
     color: #fff !important;
-    max-width: 25%;
+    max-width: 45%;
     margin-left: 50px;
     font-size: 16px;
     line-height: 26px;
@@ -86,8 +88,12 @@ button.owl-dot.active span {
     right: 15px;
 }
 
+.owl-carousel .content h2 {
+    font-weight: 700;
+}
+
 .owl-carousel .content p {
-    letter-spacing: 1px;
+    font-size: 14px;
 }
 
 .owl-carousel .content a {
@@ -213,7 +219,7 @@ position: absolute;
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, rgb(0, 0, 0), transparent, transparent);
+    background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(217,217,217,0.2) 100%);
     top: 0;
     left: 0;
     border-radius: 15px;
