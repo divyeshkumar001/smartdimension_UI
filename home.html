@@ -289,16 +289,14 @@
         function modalOpen() {
             var sendAdData = false;
             $(".modal-content").removeClass('ad-display')
-            $.ajax({url: 'http://54.177.241.77:3000/video/getTags',
+            fileURL = 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'
+            video_id = 'JustForFun042020'
+            login_id = localStorage.getItem('userId')
+            ecid = localStorage.getItem('ecID')
+            $.ajax({url: `http://54.177.241.77:3000/video/getTags?fileURL=${fileURL}&video_id=${video_id}&login_id=${login_id}&ecid=${ecid}`,
                 type: "POST",
-                data: {
-                    'fileURL': 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4',
-                    'video_id': 'JustForFun042020',
-                    'login_id': localStorage.getItem('username'),
-                    'ecid': localStorage.getItem('ecID')
-                },
                 success: (data) => {
-                    let finalData = {url: 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'};
+                    let finalData = {url: fileURL};
                     let output = [];
                     data['cas_responses']['0']['result']['response']['classification_entries'].map((item) => {
                         if(item['class']['meta-info']['temporal-info']){
