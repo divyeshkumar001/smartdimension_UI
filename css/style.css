@@ -267,7 +267,7 @@ button.close.video-full-screen {
     margin: 0;
     padding: 0;
     height: 80%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .video-full-screen img{
 		width: 23px;
