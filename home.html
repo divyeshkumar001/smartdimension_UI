@@ -56,7 +56,7 @@
 
                         <h2>Highlights: Oz Seal Semis Berth</h2>
                         <p>Beth Mooney's well compiled 60 off 50 balls powered Australia to a 4-run victory against New Zealand in the ICC Women's T20 World Cup 2020</p>
-                        <a href="#" class="modal-open"><img src="./images/watch.png" class="watch"/> Watch Now</a>
+                        <a href="#" class="modal-open" videoUrl='https://exceed-sd.s3-us-west-1.amazonaws.com/video/roller_skates_2.mp4'><img src="./images/watch.png" class="watch"/> Watch Now</a>
                     </div>
                 </div>
                 <div class="item" style="background-image: url('./images/live-watch.PNG')">
@@ -64,7 +64,7 @@
 
                         <h2>Ethiopia Tops, Oz Stumble</h2>
                         <p>Bolt-led All-Stars win the 4x100 Mixed Relay and go on top of the leaderboard as Australia get disqualified</p>
-                        <a href="#" class="modal-open"><img src="./images/watch.png" class="watch"/> Watch Now</a>
+                        <a href="#" class="modal-open" videoUrl='./video/DemoVideo.mp4'><img src="./images/watch.png" class="watch"/> Watch Now</a>
                     </div>
                 </div>
                 <div class="item" style="background-image: url('./images/Badminton.jpg')">
@@ -72,7 +72,7 @@
 
                         <h2>Highlights: Jayaram Bows out in SF</h2>
                         <p>India's Ajay Jayaram went down fighting to Thailand's Kunlavut Vitidsarn 20-22 12-22 in the semifinals of the Barcelona Spain Masters 2020</p>
-                        <a href="#" class="modal-open"><img src="./images/watch.png" class="watch"/> Watch Now</a>
+                        <a href="#" class="modal-open" videoUrl='https://exceed-sd.s3-us-west-1.amazonaws.com/video/car_racing_2.mp4'><img src="./images/watch.png" class="watch"/> Watch Now</a>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                     <img src="images/card-image.jpg" alt="card-image">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="images/playIcon.png"  class="modal-open">
+                            <img src="images/playIcon.png"  class="modal-open" videoUrl='https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'>
                         </div>
                         <h3>Running Mile</h3>
                         <p>I trained 8 weeks to run a 5 minute mile. Here's how it went</p>
@@ -132,7 +132,7 @@
                     <img src="images/card-image.jpg" alt="card-image">
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="images/playIcon.png"  class="modal-open">
+                            <img src="images/playIcon.png"  class="modal-open" videoUrl='https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'>
                         </div>
                         <h3>Running Mile</h3>
                         <p>I trained 8 weeks to run a 5 minute mile. Here's how it went</p>
@@ -177,7 +177,11 @@
             </div>
         </div>
     </div>
-
+    <div id="overlay" style="display:none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+    </div>
     <div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
             <div class="modal-content">
@@ -262,14 +266,18 @@
     <script src="js/script.js"></script>
     <script>
         // "f6171253512D2B8C0A490D45@AdobeOrg"
+        var userId = ''
+        var ecID = ''
         $(document).ready(() => {
             if(!localStorage.getItem("userId")){
                 window.location.href = 'index.html'
             }else{
-                $('#username').html(localStorage.getItem("userId"))
+                userId = localStorage.getItem("userId");
+                $('#username').html(userId)
                 var visitor = Visitor.getInstance('f6171253512D2B8C0A490D45@AdobeOrg');
                 var mcvID = visitor.getMarketingCloudVisitorID()
                 localStorage.setItem("ecID", mcvID)
+                ecID = mcvID
             }
             $('#logout').click(()=> {
                 localStorage.removeItem('userId')
@@ -286,39 +294,14 @@
             $(".modal-content").removeClass('ad-display')
             modalClose();
         })
-        function modalOpen() {
+        function modalOpen(videoUrl) {
             var sendAdData = false;
             $(".modal-content").removeClass('ad-display')
-            fileURL = 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'
-            video_id = 'JustForFun042020'
-            login_id = localStorage.getItem('userId')
-            ecid = localStorage.getItem('ecID')
-            $.ajax({url: `http://54.177.241.77:3000/video/getTags?fileURL=${fileURL}&video_id=${video_id}&login_id=${login_id}&ecid=${ecid}`,
-                type: "POST",
-                success: (data) => {
-                    let finalData = {url: fileURL};
-                    let output = [];
-                    data['cas_responses']['0']['result']['response']['classification_entries'].map((item) => {
-                        if(item['class']['meta-info']['temporal-info']){
-                            item['class']['meta-info']['temporal-info'].map((tags) => {
-                            output.push({
-                                url: 'https://www.adobe.com',
-                                title: item['class'].name,
-                                description: 'Product Description',
-                                confidence: tags.confidence,
-                                image: './images/product-image.png',
-                                startSecond: (tags['timestamp-in-ms'] / 1000),
-                                endSecond: ((tags['timestamp-in-ms'] / 1000) + 3)
-                            })
-                        })
-                        }
-                    })
-                    finalData.products = output
-                    this.showModal(finalData);
-                },
-                error: ()=> {
-                    var data = {
-                        url: 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4',
+            fileURL = videoUrl ? videoUrl : './video/DemoVideo.mp4'
+            let baseUrl = ''
+            if(fileURL == './video/DemoVideo.mp4'){ //if its demo 
+                var data = {
+                        url: fileURL,
                         products: [{
                             url: 'https://www.adobe.com',
                             title: 'Apple Watch',
@@ -353,17 +336,53 @@
                             endSecond: 25
                         }]
                     };
-
                     this.showModal(data);
+            } else{
+                $('#overlay').show();
+                $('.owl-carousel').trigger('stop.owl.autoplay')
+                video_id = 'JustForFun042020'
+                login_id = userId
+                ecid = ecID
+                baseUrl = `http://54.177.241.77:3000/video/getTags?fileURL=${fileURL}&video_id=${video_id}&login_id=${login_id}&ecid=${ecid}`
+                $.ajax({url: baseUrl,
+                type: "POST",
+                success: (data) => {
+                    let finalData = {url: fileURL};
+                    let output = [];
+                    data['cas_responses']['0']['result']['response']['classification_entries'].map((item) => {
+                        if(item['class']['meta-info']['temporal-info']){
+                            item['class']['meta-info']['temporal-info'].map((tags) => {
+                            output.push({
+                                url: 'https://www.adobe.com',
+                                title: item['class'].name,
+                                description: 'Product Description',
+                                confidence: (tags.confidence).toFixed(2),
+                                image: './images/product-image.png',
+                                startSecond: (tags['timestamp-in-ms'] / 1000),
+                                endSecond: ((tags['timestamp-in-ms'] / 1000) + 3)
+                            })
+                        })
+                        }
+                    })
+                    finalData.products = output
+                    $('#overlay').hide();
+                    $('.owl-carousel').trigger('play.owl.autoplay',[4000])
+                    this.showModal(finalData);
+                },
+                error: (err)=> {
+                    let finalData = {url: fileURL};
+                    this.showModal(finalData);
+                    console.log('Sensie aoi error ' + err)
                 }
             })
-
+            }
         }
 
         function showModal(products){
                              // var response = JSON.parse(data.responseText);
                              $('#exampleModal').modal('show');
-
+                             $(".suggestion-generated:not(.added) > ul").html('');
+                             $(".suggestion-generated.added > ul").html('');
                     //https://v.ftcdn.net/01/19/51/24/700_F_119512479_LnlcYzOimjgBsqgAsdshLBTKfBmp8tWJ_ST.mp4
                     var data = products;
                     vid.src =  data.url;
@@ -415,8 +434,16 @@
                            }
 
                         updateSuggestion(items, percentage)
-                        if(percentage ==100) {
-                            console.log('complete')
+                    
+                    };
+                    vid.oncanplay = function() {
+                        $('.seek i:last-of-type').text(timeUpdate(vid.duration));
+                        vid.play();
+                    }
+
+                    vid.addEventListener('ended',myHandler,false);
+                    function myHandler(e) {
+                        console.log('complete')
                         //    $(".modal-content").addClass('ad-display');
                         $(".suggestion-generated:not(.added) > ul").html('');
                         //get random 5
@@ -426,11 +453,6 @@
                         html += '<a href="'+value.url+'" target="_blank"><li><img src="'+value.image+'" /><div class="content"><h4>'+value.title+'</h4><p>Confidence: '+value.confidence+'</p></div></li></a>'  
                         });
                         $(".suggestion-generated.added > ul").html(html);
-                           } 
-                    };
-                    vid.oncanplay = function() {
-                        $('.seek i:last-of-type').text(timeUpdate(vid.duration));
-                        vid.play();
                     }
 
                     vid.onloadedmetadata = function() {
@@ -439,7 +461,7 @@
                             videoId: 'JustForFun042020',
                             videoGenre: 'sports:cricket',
                             videoName: 'JustForFun',
-                            videoLength: vid.duration,
+                            videoLength: parseInt(vid.duration),
                             videoPlayerName: 'html5 player',
                             paage: document.title,
                             siteSection: 'Video: Sports',
@@ -482,7 +504,7 @@
         });
         $('.modal-open').on('click', function() {
             $(".modal-content").removeClass('ad-display')
-            modalOpen();
+            modalOpen($(this).attr('videoUrl'));
         })
         function updateSuggestion(data){
             var html = '';
@@ -502,7 +524,7 @@
             margin: 10,
             nav: true,
             autoplay:true,
-    autoplayTimeout:2000,
+    autoplayTimeout:4000,
             responsive: {
                 0: {
                     items: 1
