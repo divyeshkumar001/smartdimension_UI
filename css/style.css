@@ -266,6 +266,8 @@ button.close.video-full-screen {
 	list-style: none;
     margin: 0;
     padding: 0;
+    height: 80%;
+    overflow-y: scroll;
 }
 .video-full-screen img{
 		width: 23px;
@@ -405,6 +407,19 @@ content: "";
     left: 0;
     top: 0;
 }
+
+#shoe-ad{
+  width: 100%;
+  background-image: url(../images/shoe-ad-color.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0px 50%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
 .modal-content:not(.ad-display) .ads {
     display: none;
 }
@@ -417,6 +432,13 @@ content: "";
     background: #E7E7E7;
     padding: 20px;
 }
+
+.modal-content.ad-display .ads .bottom .color-block{
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
 
 .ads{
     background-image: -webkit-linear-gradient(270deg, #c9c9c9 50%, #E7E7E7 50%);
@@ -482,6 +504,11 @@ content: "";
     -webkit-appearance: none;
     transition: border-radius linear 0.05s, width linear 0.05s;
   }
+
+  .cart-button{
+    padding: 8px;
+  }
+
   .shop-now-button:focus {
     outline: 0;
   }
@@ -520,6 +547,25 @@ content: "";
     color: black !important;
     transition: 0.1s ease-in;
     padding: 0px;
+  }
+  .cart-updated{
+    width: 120px;
+    height: 120px;
+    color: black !important;
+    min-width: unset;
+    padding: 0px;
+    border-radius: 50%;
+  }
+  .shop-now-button.cart-updated:before {
+    display: inline-block;
+    content: '';
+    width: 60px;
+    height: 24.5px;
+    border: 4px solid #000;
+    border-right: 0;
+    border-top: 0;
+    margin: 10px 60px;
+    transform: translate(-50%, -50%) rotate(-45deg) scale(1);
   }
   .shop-now-button.animate.success:before {
     display: inline-block;
