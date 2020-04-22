@@ -240,7 +240,7 @@
                         <a><img src="./images/right-arrow.png"/></a>
                     </div>
                     <video id="video">
-                        <source  src="https://v.ftcdn.net/01/19/51/24/700_F_119512479_LnlcYzOimjgBsqgAsdshLBTKfBmp8tWJ_ST.mp4" type="video/mp4">
+                        <source  src="https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4" type="video/mp4">
                     </video>
                     <div class="seek" style="color: #fff">
                         <i></i>
@@ -267,6 +267,9 @@
                 window.location.href = 'index.html'
             }else{
                 $('#username').html(localStorage.getItem("userId"))
+                var visitor = Visitor.getInstance('f6171253512D2B8C0A490D45@AdobeOrg');
+                var mcvID = visitor.getMarketingCloudVisitorID()
+                localStorage.setItem("ecID", mcvID)
             }
             $('#logout').click(()=> {
                 localStorage.removeItem('userId')
@@ -286,8 +289,16 @@
         function modalOpen() {
             var sendAdData = false;
             $(".modal-content").removeClass('ad-display')
-            $.ajax({url: './json/sensei_response.json',
+            $.ajax({url: 'http://54.177.241.77:3000/video/getTags',
+                type: "POST",
+                data: {
+                    'fileURL': 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4',
+                    'video_id': 'JustForFun042020',
+                    'login_id': localStorage.getItem('username'),
+                    'ecid': localStorage.getItem('ecID')
+                },
                 success: (data) => {
+                    let finalData = {url: 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4'};
                     let output = [];
                     data['cas_responses']['0']['result']['response']['classification_entries'].map((item) => {
                         if(item['class']['meta-info']['temporal-info']){
@@ -304,12 +315,12 @@
                         })
                         }
                     })
-                    console.log(output)
-                    this.showModal(output);
+                    finalData.products = output
+                    this.showModal(finalData);
                 },
                 error: ()=> {
                     var data = {
-                        url: 'https://v.ftcdn.net/01/19/51/24/700_F_119512479_LnlcYzOimjgBsqgAsdshLBTKfBmp8tWJ_ST.mp4',
+                        url: 'https://exceed-sd.s3-us-west-1.amazonaws.com/video/JustForFun.mp4',
                         products: [{
                             url: 'https://www.adobe.com',
                             title: 'Apple Watch',
@@ -439,9 +450,6 @@
                         }
                         });
                         document.body.dispatchEvent(ev);
-                        var visitor = Visitor.getInstance('f6171253512D2B8C0A490D45@AdobeOrg');
-                        var mcvID = visitor.getMarketingCloudVisitorID()
-                        console.log(mcvID);
                     };
 
                     vid.oncanplay();
