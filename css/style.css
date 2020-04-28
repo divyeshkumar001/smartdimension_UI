@@ -200,7 +200,7 @@ ul.navbar-nav.mr-auto li {
 position: absolute;
     height: 100%;
     z-index: 9;
-    padding: 40px 10px 0 50px;
+    padding: 40px 0px 0 50px;
     width: 0px;
     left: 0px;
     color: #fff;
@@ -275,13 +275,13 @@ button.close.video-full-screen {
     display: block;
     
 }
-.suggestion-generated h3,
-.suggestion-generated ul{
+.suggestion-generated h3{
 	margin-left: 10px;
 }
 .suggestion-generated.show {
 	left: 0;
     width: 300px;
+    padding: 40px 50px 0 50px;
 }
 .suggestion-generated.added.show {
     right: 0;
@@ -735,18 +735,25 @@ content: "";
     width: 400px;
   }
 
-  #overlay {
-    background: #ffffff;
-    color: #666666;
-    position: fixed;
+  #spinner-loading {
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #percentage-indicator{
+    /* display: none; */
+    transition: 1s ease-in;
+    position: absolute;
     width: 100%;
-    z-index: 5000;
-    top: 0;
-    left: 0;
-    float: left;
-    text-align: center;
-    padding-top: 25%;
-    opacity: .80;
+    height: 100%;
+    z-index: 9;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10%;
+    justify-content: center;
+    font-size: 42px;
+    color: white;
   }
   
