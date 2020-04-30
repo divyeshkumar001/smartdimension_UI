@@ -8,7 +8,6 @@
     <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/style.css">
     <script src="//assets.adobedtm.com/e3d6d7658cf1/05deee267e30/launch-5defa87cd17b.min.js"></script>
-    <script src="/js/visitorapi.min.js"></script>
     <title>Smart Dimensions Home Page</title>
 </head>
 
@@ -307,11 +306,13 @@
                 $('#username').html(userId)
                 var visitor = Visitor.getInstance('f6171253512D2B8C0A490D45@AdobeOrg');
                 var mcvID = visitor.getMarketingCloudVisitorID()
+                debugger;
                 localStorage.setItem("ecID", mcvID)
                 ecID = mcvID
             }
             $('#logout').click(() => {
                 localStorage.removeItem('userId')
+                localStorage.removeItem('ecID')
                 window.location.href = 'index.html'
             })
         })
@@ -546,7 +547,7 @@
             else if (percentage >= 80) {
                 if (stats[3] == false) {
                     //add is loaded
-                    // $(".modal-content").addClass('ad-display');
+                    $(".modal-content").addClass('ad-display');
 
                     //call this only once
                     console.log('Custom event called once the ad is shown(should be called only once)')
