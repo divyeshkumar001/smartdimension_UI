@@ -595,8 +595,12 @@
             $(".suggestion-generated.added > ul").html('<div id="spinner-loading"> <div class="spinner-border" role="status"> <span class="sr-only">Loading...</span> </div> </div>');
             //https://v.ftcdn.net/01/19/51/24/700_F_119512479_LnlcYzOimjgBsqgAsdshLBTKfBmp8tWJ_ST.mp4
 
-
-            vid.src = url;
+            if(typeof(url) == "object")
+            {
+                vid.src = url.url;
+            }
+            else
+                vid.src = url;
             vid.play();
 
             vid.ontimeupdate = function () {
